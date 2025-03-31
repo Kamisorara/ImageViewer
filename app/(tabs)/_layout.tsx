@@ -54,6 +54,7 @@ export default function TabLayout() {
 
   // 计算指示器动画样式 - 在两个标签中心点之间移动
   const indicatorPosition = animatedVfalue.interpolate({
+    // 0代表第一个标签，1代表第二个标签
     inputRange: [0, 1],
     outputRange: [tab1Center - indicatorWidth / 2, tab2Center - indicatorWidth / 6],
   });
