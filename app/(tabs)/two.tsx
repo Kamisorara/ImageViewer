@@ -1,10 +1,14 @@
 import { StyleSheet, Image, View as RNView, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import { router } from 'expo-router';
 
 export default function TabTwoScreen() {
   const [loginStatus, setLoginStatus] = useState(false);
+
+  const handleLogin = () => {
+    router.push("/login");
+  }
 
   return (
     <View style={styles.container}>
@@ -15,7 +19,7 @@ export default function TabTwoScreen() {
           </RNView>
         ) : (
           <RNView style={styles.notLoggedInContainer}>
-            <TouchableOpacity style={styles.loginButton}>
+            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
               <Text style={styles.loginButtonText}>登录</Text>
             </TouchableOpacity>
           </RNView>
