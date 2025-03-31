@@ -27,8 +27,15 @@ export default function TabLayout() {
   const [animatedVfalue] = useState(new Animated.Value(0));
 
   // TabBar 宽度为屏幕宽度的 70%
-  const tabBarWidth = windowWidth * 0.55;
+  const tabBarWidth = windowWidth * 0.5;
   const tabWidth = tabBarWidth / 2 - 10;
+
+  // 添加指示器的设置
+  const indicatorWidth = 35; // 指定固定宽度，可以根据需要调整
+
+  // 计算每个标签的中心位置
+  const tab1Center = tabWidth / 2;
+  const tab2Center = tabWidth + tabWidth / 2;
 
   // 监听路径变化并且执行动画
   useEffect(() => {
@@ -45,10 +52,10 @@ export default function TabLayout() {
 
   }, [pathname]);
 
-  // 计算指示器动画样式
+  // 计算指示器动画样式 - 在两个标签中心点之间移动
   const indicatorPosition = animatedVfalue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, tabWidth], // 指示器的宽度
+    outputRange: [tab1Center - indicatorWidth / 2, tab2Center - indicatorWidth / 6],
   });
 
   return (
@@ -99,16 +106,14 @@ export default function TabLayout() {
               <Animated.View
                 style={{
                   position: 'absolute',
-                  width: tabWidth - 55,
-                  left: 35,
-                  height: 3,
+                  width: indicatorWidth,
+                  height: 5,
+                  left: 5,
                   backgroundColor: Colors[colorScheme ?? 'light'].tint,
-                  bottom: 0,
+                  bottom: 8, // 调整到合适的位置
                   borderRadius: 3,
                   // 设置指示器的初始位置
                   transform: [{ translateX: indicatorPosition }],
-                  // 设置指示器的动画
-                  marginHorizontal: 5,
                 }}
               />
             </View>
