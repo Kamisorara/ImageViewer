@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable, StyleSheet, View, Dimensions } from 'react-native';
+import { Link, Tabs, usePathname } from 'expo-router';
+import { StyleSheet, View, Dimensions, Animated } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Colors from '@/constants/Colors';
@@ -21,9 +21,35 @@ function TabBarIcon(props: {
 export default function TabLayout() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
+  const pathname = usePathname();
+
+  // 创建动画
+  const [animatedVfalue] = useState(new Animated.Value(0));
 
   // TabBar 宽度为屏幕宽度的 70%
   const tabBarWidth = windowWidth * 0.55;
+  const tabWidth = tabBarWidth / 2 - 10;
+
+  // 监听路径变化并且执行动画
+  useEffect(() => {
+    const toValue = pathname.includes('two') ? 1 : 0;
+    // 创建了有弹性的切换效果，比简单的线性动画更自然
+    Animated.spring(animatedVfalue, {
+      toValue,
+      useNativeDriver: true,
+      // 设置动画的持续时间
+      friction: 5,
+      // 设置弹性动画的阻尼系数
+      tension: 50,
+    }).start();
+
+  }, [pathname]);
+
+  // 计算指示器动画样式
+  const indicatorPosition = animatedVfalue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, tabWidth], // 指示器的宽度
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -68,7 +94,25 @@ export default function TabLayout() {
               borderRadius: 20,
               alignSelf: 'center',
               ...styles.shadow
-            }} />
+            }} >
+              {/* 添加动画指示器 */}
+              <Animated.View
+                style={{
+                  position: 'absolute',
+                  width: tabWidth - 55,
+                  left: 35,
+                  height: 3,
+                  backgroundColor: Colors[colorScheme ?? 'light'].tint,
+                  bottom: 0,
+                  borderRadius: 3,
+                  // 设置指示器的初始位置
+                  transform: [{ translateX: indicatorPosition }],
+                  // 设置指示器的动画
+                  marginHorizontal: 5,
+                }}
+              />
+            </View>
+
           ),
         }}>
         <Tabs.Screen
