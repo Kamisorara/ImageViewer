@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs, usePathname } from 'expo-router';
 import { StyleSheet, View, Dimensions, Animated } from 'react-native';
@@ -22,6 +22,7 @@ export default function TabLayout() {
   const colorScheme = useColorScheme();
   const insets = useSafeAreaInsets();
   const pathname = usePathname();
+  const [lastValidTab, setLastValidTab] = useState(0); // 默认为首页
 
   // 创建动画
   const [animatedVfalue] = useState(new Animated.Value(0));
@@ -39,16 +40,32 @@ export default function TabLayout() {
 
   // 监听路径变化并且执行动画
   useEffect(() => {
-    const toValue = pathname.includes('two') ? 1 : 0;
-    // 创建了有弹性的切换效果，比简单的线性动画更自然
-    Animated.spring(animatedVfalue, {
-      toValue,
-      useNativeDriver: true,
-      // 设置动画的持续时间
-      friction: 5,
-      // 设置弹性动画的阻尼系数
-      tension: 50,
-    }).start();
+    // console.log(pathname);
+
+    // 判断当前路径是否为有效的标签页路径
+    const isValidTabPath = pathname === '/' || pathname === '/two';
+
+    let toValue;
+
+    if (isValidTabPath) {
+      // 是有效的标签页路径，更新lastValidTab
+      if (pathname === '/two') {
+        toValue = 1;
+        setLastValidTab(1);
+      } else {
+        toValue = 0;
+        setLastValidTab(0);
+      }
+
+      // 执行指示器动画
+      Animated.spring(animatedVfalue, {
+        toValue,
+        useNativeDriver: true,
+        friction: 5,
+        tension: 50,
+      }).start();
+    }
+    // 如果不是有效的标签页路径，不执行动画，保持指示器在上一个位置
 
   }, [pathname]);
 
