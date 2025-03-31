@@ -1,7 +1,7 @@
 import { StyleSheet, Image, View as RNView, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { useState } from 'react';
-import { router } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
 
 export default function TabTwoScreen() {
   const [loginStatus, setLoginStatus] = useState(false);
@@ -9,6 +9,18 @@ export default function TabTwoScreen() {
   const handleLogin = () => {
     router.push("/login");
   }
+
+  // 测试回传数据
+  const params = useLocalSearchParams();
+
+  useEffect(() => {
+    if (params.loginSuccess === "true") {
+      setLoginStatus(true);
+      if (params.userName) {
+        console.log("用户名:", params.userName);
+      }
+    }
+  }, [params]);
 
   return (
     <View style={styles.container}>
