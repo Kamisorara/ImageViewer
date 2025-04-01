@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, TouchableOpacity, FlatList, Image } from 'react-native';
 
 import { Text, View } from '@/components/Themed';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
@@ -71,13 +71,10 @@ export default function TabOneScreen() {
         {item.type === 'folder' ? (
           <Ionicons name="folder" size={24} color="#FFD700" />
         ) : item.type === 'image' && item.uri ? (
-          //   <Image 
-          //   source={{ uri: item.uri }}
-          //   style={styles.thumbnail}
-          // />
-          <View style={styles.thumbnail}>
-            <Text>Image</Text>
-          </View>
+          <Image
+            source={{ uri: item.uri }}
+            style={styles.thumbnail}
+          />
         ) : (
           <Ionicons name="document" size={24} color="#A9A9A9" />
         )}
