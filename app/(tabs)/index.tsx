@@ -86,14 +86,17 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>File Systm</Text>
-        {currentPath != 'root' && (
+        {currentPath !== 'root' ? (
           <TouchableOpacity onPress={navigateToParent} style={styles.backButton}>
             <Ionicons name="arrow-back" size={24} color="#007AFF" />
-            <Text style={styles.backText}>Back</Text>
           </TouchableOpacity>
+        ) : (
+          <View style={styles.backButtonPlaceholder} />
         )}
+        <Text style={styles.title}>文件浏览器</Text>
+        <View style={styles.headerRight} />
       </View>
+
       <View style={styles.pathContainer}>
         <Text style={styles.pathText}>{currentPath.replace(/\//g, ' > ')}</Text>
       </View>
@@ -106,7 +109,7 @@ export default function TabOneScreen() {
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text>No items found</Text>
+            <Text>无内容</Text>
           </View>
         }
       />
@@ -131,14 +134,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
   },
   backButton: {
-    flexDirection: 'row',
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
     alignItems: 'center',
   },
-  backText: {
-    color: '#007AFF',
-    marginLeft: 5,
+  backButtonPlaceholder: {
+    height: 40,
+    width: 40,
+  },
+  headerRight: {
+    width: 40, // 保持标题居中
   },
   pathContainer: {
     padding: 10,
