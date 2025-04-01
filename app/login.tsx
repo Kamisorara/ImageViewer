@@ -79,6 +79,7 @@ export default function LoginScreen() {
           <View style={styles.inputContainer}>
             <Text style={styles.label}>用户名</Text>
             <TextInput
+              autoFocus
               style={styles.input}
               placeholder="请输入用户名"
               placeholderTextColor="#A0A0A0"
