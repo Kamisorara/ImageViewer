@@ -101,6 +101,7 @@ export default function TabOneScreen() {
         <Text style={styles.pathText}>{currentPath.replace(/\//g, ' > ')}</Text>
       </View>
 
+      {/* 文件列表 */}
       <FlatList
         data={currentItems}
         renderItem={renderItem}
@@ -128,8 +129,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEEEEE',
   },
   title: {
     fontSize: 20,
@@ -152,7 +151,8 @@ const styles = StyleSheet.create({
   },
   pathContainer: {
     padding: 10,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#e5e4e4',
+    borderRadius: 10,
   },
   pathText: {
     color: '#555',
@@ -168,8 +168,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEEEEE',
+    borderRadius: 20,
+    backgroundColor: '#F5F5F5',
+    marginVertical: 5,
   },
   itemIconContainer: {
     width: 40,
