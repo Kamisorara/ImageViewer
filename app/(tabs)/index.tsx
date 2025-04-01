@@ -177,11 +177,12 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 10,
   },
   thumbnail: {
     width: 40,
     height: 40,
-    borderRadius: 3,
+    borderRadius: 10,
   },
   itemName: {
     marginLeft: 10,
